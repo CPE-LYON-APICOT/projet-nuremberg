@@ -169,17 +169,57 @@ SyllabusBuilder ..> Syllabus : <<build>>
 ```
 
 
-```plantuml
-@startuml
-
-@enduml
-```
-
 ### Diagramme 2 — *Type*
 
 ![IMGdiag2](https://cdnvoid.jessim.ovh/items/sequenceForm.png)
 ```plantuml
 @startuml
+title Scénario : Achat d'une formation et Notification
+
+actor Client_Final
+participant "AchatManager" as AM
+participant "PaymentFactory" as PF
+participant "StripeStrategy" as Stripe
+participant "Formation (Subject)" as F
+participant "ContentFactory" as CF
+participant "Client_Final (Observer)" as Obs
+
+Client_Final -> AM : acheterFormation(id)
+activate AM
+
+' --- STRATEGY PATTERN ---
+AM -> PF : getPaymentMethod("Stripe")
+activate PF
+PF --> AM : strategyInstance
+deactivate PF
+
+AM -> Stripe : pay(montant)
+activate Stripe
+Stripe --> AM : success
+deactivate Stripe
+
+' --- LOGIQUE MÉTIER ---
+AM -> F : ajouterEleve(Client_Final)
+activate F
+
+' --- OBSERVER PATTERN ---
+F -> F : notify()
+F -> Obs : update("Bienvenue dans la formation !")
+activate Obs
+Obs --> F : ack
+deactivate Obs
+
+' --- FACTORY METHOD ---
+F -> CF : createContent("VideoBienvenue")
+activate CF
+CF --> F : instanceVideo
+deactivate CF
+
+F --> AM : confirmation
+deactivate F
+
+AM --> Client_Final : Affichage du succès
+deactivate AM
 
 @enduml
 ```
