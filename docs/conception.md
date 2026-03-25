@@ -53,36 +53,121 @@
 
 ### Diagramme 1 — *Type (classe, séquence, cas d'utilisation…)*
 
-<!-- Exemple de syntaxe PlantUML (à remplacer par votre diagramme) :
 
+![IMGDiag1](https://cdnvoid.jessim.ovh/items/diag1Class.png)
 ```plantuml
 @startuml
-interface Drawable {
-    + draw(gc : GraphicsContext) : void
+skinparam style underline
+title Diagramme de Classe - Horizon Savoir
+
+' --- INTERFACES ---
+interface Subject {
+    +attach(observer: Observer)
+    +detach(observer: Observer)
+    +notify()
 }
 
-abstract class Entity {
-    - x : double
-    - y : double
-    + getX() : double
-    + getY() : double
-    + update() : void
+interface Observer {
+    +update(message: String)
 }
 
-Entity ..|> Drawable
-
-class Player extends Entity {
-    - speed : double
-    + move(direction : Direction) : void
+interface PaymentStrategy {
+    +pay(amount: float): boolean
 }
 
-class Obstacle extends Entity {
-    - damage : int
+' --- CLASSES ---
+class Formation {
+    -id: int
+    -titre: String
+    -description: String
+    -prixBase: float
+    -listeEleves: List<Observer>
+    +getPrice(): float
+    +ajouterContenu(c: ContenuPedagogique)
 }
+
+class Etudiant {
+    -nom: String
+    -email: String
+    +update(message: String)
+}
+
+abstract class ContenuPedagogique {
+    -titre: String
+    -estTermine: boolean
+    {abstract} +afficher()
+}
+
+class Video {
+    -duree: int
+}
+
+class Quiz {
+    -scoreMin: int
+}
+
+class PDF {
+    -nbPages: int
+}
+
+class ContentFactory {
+    +createContent(type: String): ContenuPedagogique
+}
+
+class StripeStrategy {
+    +pay(amount: float): boolean
+}
+
+class PayPalStrategy {
+    +pay(amount: float): boolean
+}
+
+class PaymentProcessor {
+    -strategy: PaymentStrategy
+    +process(amount: float)
+}
+
+abstract class FormationDecorator {
+    #wrappedFormation: Formation
+    +getPrice(): float
+}
+
+class PromotionDecorator {
+    -remise: float
+    +getPrice(): float
+}
+
+class Syllabus {
+    -chapitres: List<String>
+    -objectifs: List<String>
+}
+
+class SyllabusBuilder {
+    -syllabus: Syllabus
+    +addChapitre(titre: String): SyllabusBuilder
+    +build(): Syllabus
+}
+
+' --- RELATIONS ---
+Subject <|.. Formation
+Observer <|.. Etudiant
+ContenuPedagogique <|-- Video
+ContenuPedagogique <|-- Quiz
+ContenuPedagogique <|-- PDF
+PaymentStrategy <|.. StripeStrategy
+PaymentStrategy <|.. PayPalStrategy
+Formation <|-- FormationDecorator
+FormationDecorator <|-- PromotionDecorator
+
+Formation "1" *-- "*" ContenuPedagogique
+Formation "1" o-- "1" Syllabus
+ContentFactory ..> ContenuPedagogique : <<create>>
+PaymentProcessor --> PaymentStrategy
+SyllabusBuilder ..> Syllabus : <<build>>
+
 @enduml
 ```
 
-Ceci est un exemple, remplacez-le par votre propre diagramme. -->
 
 ```plantuml
 @startuml
@@ -92,6 +177,7 @@ Ceci est un exemple, remplacez-le par votre propre diagramme. -->
 
 ### Diagramme 2 — *Type*
 
+![IMGdiag2](https://cdnvoid.jessim.ovh/items/sequenceForm.png)
 ```plantuml
 @startuml
 
