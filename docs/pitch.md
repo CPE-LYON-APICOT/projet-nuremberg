@@ -4,21 +4,31 @@
 
 ## Présentation générale
 
-<!-- Décrivez votre projet en quelques phrases. Quel problème résout-il ? À qui s'adresse-t-il ? -->
+Horizon Savoir est une plateforme simple et intuitive qui permet aux formateurs de créer leurs cours et aux élèves de les suivre sans aucune difficulté technique.
 
 ## Fonctionnalités principales
 
-<!-- Listez les fonctionnalités clés de votre projet. Pour chaque fonctionnalité, expliquez ce qu'elle apporte à l'utilisateur. -->
 
-### Fonctionnalité 1 — *Nom*
+### Fonctionnalité 1 — Suivi de progression intelligent
 
-### Fonctionnalité 2 — *Nom*
+La plateforme mémorise l avancée de chaque élève. Cela permet de reprendre son cours exactement là où on s était arrêté, garantissant une expérience sans stress sur n importe quel appareil.
 
-### Fonctionnalité 3 — *Nom*
+### Fonctionnalité 2 — Paiement sécurisé et instantané 
 
-### Fonctionnalité 4 — *Nom*
+Nous intégrons des solutions de paiement reconnues comme Stripe. Dès que le client achète une formation, son accès est débloqué automatiquement pour une satisfaction immédiate.
+
+### Fonctionnalité 3 — Système d alertes automatiques 
+
+Pour garder les élèves motivés, la plateforme envoie des notifications dès qu un nouveau contenu est publié ou qu un formateur apporte une réponse, créant un véritable suivi interactif.
+
+### Fonctionnalité 4 — Offres et options personnalisées
+
+Les formateurs peuvent booster leurs ventes en créant des promotions ou en proposant des options à la carte, comme des certificats de réussite, s adaptant ainsi aux besoins de chaque client.
+
+### Fonctionnalité 5 — Organisateur de cours structuré
+
+Les formateurs peuvent booster leurs ventes en créant des promotions ou en proposant des options à la carte, comme des certificats de réussite, s adaptant ainsi aux besoins de chaque client.
 
 ## Évolutions envisagées
 
-<!-- Quelles sont les perspectives d'évolution ? Qu'est-ce qui pourrait être ajouté dans une v2 ? Vendez du rêve (raisonnablement). -->
-
+Pour la suite, nous prévoyons d intégrer un espace de discussion communautaire entre élèves et un mode hors-ligne pour consulter les leçons sans connexion internet. Nous souhaitons également ajouter des statistiques détaillées pour aider les formateurs à améliorer la qualité de leurs cours.
