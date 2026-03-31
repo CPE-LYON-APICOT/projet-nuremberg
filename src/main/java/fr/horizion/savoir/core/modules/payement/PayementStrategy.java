@@ -6,4 +6,6 @@ public interface PayementStrategy {
 
         return false;
     }
+
+    boolean pay(float amount);
 }
