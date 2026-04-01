@@ -80,6 +80,10 @@ public class Etudiant {
     }
 
 
+    @Override
+    public String toString() {
+        return "nom:" + nom + " prenom:" + prenom + " adresse:" + adresse + " dateNaissance:" + dateNaissance + " email:" + email;
+    }
 
 
 }
