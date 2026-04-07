@@ -2,17 +2,22 @@ package fr.horizion.savoir.models.formation;
 
 import fr.horizion.savoir.core.modules.formation.ContentFactory;
 import fr.horizion.savoir.models.Etudiant;
+import fr.horizion.savoir.shared.observer.Observer;
+import fr.horizion.savoir.shared.observer.Subject;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
-public class Formartion {
+public class Formartion implements Subject {
 
     private int id;
     private String titre;
     private String description;
     private float prix;
     private final List<Etudiant> lesEleves;
+    private List<Observer> observers = new ArrayList<>();
+
+
 
     private List<ContenuePedagogique> contenuePedagogiques;
 
@@ -77,4 +82,21 @@ public class Formartion {
         return " titre:" + titre + " description:" + description + " prix:" + prix + " lesEleves:" + lesEleves + " contenuePedagogiques:" + contenuePedagogiques;
     }
 
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
+
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notify(String message) {
+        for (Observer observer : observers) {
+            observer.update(message);
+        }
+    }
 }
