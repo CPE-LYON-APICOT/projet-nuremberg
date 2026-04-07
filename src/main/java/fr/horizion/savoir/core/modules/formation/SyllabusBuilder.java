@@ -16,6 +16,11 @@ public class SyllabusBuilder {
         return this;
     }
 
+    public SyllabusBuilder addObjectif(String objectif) {
+        syllabus.addObjectif(objectif);
+        return this;
+    }
+
     public Syllabus build() {
         return syllabus;
     }
