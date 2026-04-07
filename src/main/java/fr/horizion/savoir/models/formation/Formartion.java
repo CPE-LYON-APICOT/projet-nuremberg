@@ -10,16 +10,14 @@ import java.util.List;
 
 public class Formartion implements Subject {
 
-    private int id;
+    private final int id;
     private String titre;
     private String description;
     private float prix;
     private final List<Etudiant> lesEleves;
-    private List<Observer> observers = new ArrayList<>();
-
-
-
-    private List<ContenuePedagogique> contenuePedagogiques;
+    private final List<Observer> observers = new ArrayList<>();
+    private final List<ContenuePedagogique> contenuePedagogiques;
+    private final ContentFactory contentFactory = new ContentFactory();
 
     public Formartion(int id, String titre, String description, float prix, List<Etudiant> lesEleves, List<ContenuePedagogique> contenuePedagogiques) {
         this.id = id;
@@ -28,7 +26,6 @@ public class Formartion implements Subject {
         this.prix = prix;
         this.lesEleves = lesEleves;
         this.contenuePedagogiques = contenuePedagogiques;
-
     }
 
     public int getId() {
@@ -63,29 +60,33 @@ public class Formartion implements Subject {
         return lesEleves;
     }
 
-
-    private final ContentFactory contentFactory = new ContentFactory();
-
     public void ajouterContenu(String type, String titre, Boolean estTermine, int v) {
         ContenuePedagogique c = contentFactory.createContent(type, titre, estTermine, v);
-        contenuePedagogiques.add(c);
+        if (c != null) {
+            contenuePedagogiques.add(c);
+        }
     }
 
     public List<ContenuePedagogique> getContenuePedagogiques() {
         return contenuePedagogiques;
     }
 
-
-
     @Override
     public String toString() {
-        return " titre:" + titre + " description:" + description + " prix:" + prix + " lesEleves:" + lesEleves + " contenuePedagogiques:" + contenuePedagogiques;
+        return "Formation{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", description='" + description + '\'' +
+                ", prix=" + prix +
+                ", contenuePedagogiques=" + contenuePedagogiques.size() +
+                '}';
     }
 
     @Override
     public void attach(Observer observer) {
-        observers.add(observer);
-
+        if (observer != null && !observers.contains(observer)) {
+            observers.add(observer);
+        }
     }
 
     @Override
