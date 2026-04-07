@@ -11,4 +11,8 @@ public class Video extends ContenuePedagogique {
         this.duree = duree;
 
     }
+
+    public int getDuree() {
+        return duree;
+    }
 }

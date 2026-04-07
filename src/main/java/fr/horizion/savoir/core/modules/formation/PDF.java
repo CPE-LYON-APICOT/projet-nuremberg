@@ -9,4 +9,8 @@ public class PDF extends ContenuePedagogique {
         super(titre, estTermine);
         this.nbPage = nbPage;
     }
+
+    public int getNbPage() {
+        return nbPage;
+    }
 }

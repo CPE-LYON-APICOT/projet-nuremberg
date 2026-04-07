@@ -7,20 +7,12 @@ public class ContentFactory {
 
     public ContenuePedagogique createContent(String type, String titre, Boolean estTermine, int specificVal ) {
 
-        return switch (type) {
-            case "video" -> {
-                yield new Video(titre, estTermine, specificVal);
+        String tolowerType = type.toLowerCase();
 
-
-            }
-
-            case "quiz" -> {
-                yield new Quiz( titre, estTermine, specificVal);
-            }
-
-            case "pdf" -> {
-                yield new PDF( titre, estTermine, specificVal);
-            }
+        return switch (tolowerType) {
+            case "video" -> new Video(titre, estTermine, specificVal);
+            case "quiz" -> new Quiz(titre, estTermine, specificVal);
+            case "pdf" -> new PDF(titre, estTermine, specificVal);
             default -> null;
         };
     }
