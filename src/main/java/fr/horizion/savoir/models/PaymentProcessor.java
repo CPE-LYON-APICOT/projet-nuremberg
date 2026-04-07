@@ -3,18 +3,16 @@ package fr.horizion.savoir.models;
 import fr.horizion.savoir.core.modules.payement.PayementStrategy;
 
 public class PaymentProcessor {
+    private final PayementStrategy strategy;
 
+    // Constructeur qui accepte la stratégie
+    public PaymentProcessor(PayementStrategy strategy) {
+        this.strategy = strategy;
+    }
 
-    private PayementStrategy payementStrategy;
-
-     public PaymentProcessor(PayementStrategy payementStrategy) {
-         this.payementStrategy = payementStrategy;
-     }
-
-     public boolean process(float amount) {
-         return payementStrategy.pay(amount);
-     }
-
-
-
+    // On utilise long, String, String pour matcher l'interface
+    public boolean process(long amount, String currency, String orderId) {
+        if (strategy == null) return false;
+        return strategy.pay(amount, currency, orderId);
+    }
 }

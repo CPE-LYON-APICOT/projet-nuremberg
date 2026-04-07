@@ -24,6 +24,7 @@ application {
 
 dependencies {
     implementation 'com.google.inject:guice:7.0.0'
+    implementation "com.stripe:stripe-java:32.0.0"
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
