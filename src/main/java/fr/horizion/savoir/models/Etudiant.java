@@ -1,9 +1,11 @@
 package fr.horizion.savoir.models;
 
+import fr.horizion.savoir.shared.observer.Observer;
+
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class Etudiant {
+public class Etudiant implements Observer {
 
 
     private String nom;
@@ -91,4 +93,10 @@ public class Etudiant {
     }
 
 
+    @Override
+    public void update(String message) {
+
+        System.out.println("L'étudiant " + nom + " a reçu : " + message);
+
+    }
 }
