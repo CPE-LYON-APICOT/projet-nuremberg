@@ -19,7 +19,7 @@ javafx {
 }
 
 application {
-    mainClass = 'fr.cpe.App'
+    mainClass = 'fr.horizion.savoir.App'
 }
 
 dependencies {
