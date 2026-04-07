@@ -12,12 +12,17 @@ public class Etudiant {
     private Date dateNaissance;
     private String email;
 
-    public Etudiant(String nom, String prenom, String adresse, Date dateNaissance, String email) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.adresse = adresse;
-        this.dateNaissance = dateNaissance;
-        this.email = email;
+    public Etudiant(String nom, String prenom, String adresse, Date dateNaissance, String email) throws Exception {
+
+        if (isValid(email)){
+            this.email = email;
+            this.nom = nom;
+            this.prenom = prenom;
+            this.adresse = adresse;
+            this.dateNaissance = dateNaissance;
+        }else{
+            throw  new Exception("Email not valid");
+        }
 
     }
 

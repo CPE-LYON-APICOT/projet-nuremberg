@@ -15,7 +15,12 @@ public class Draft {
         ContenuePedagogique c2 = new PDF("Les bases de Java", false,    20);
         ContenuePedagogique c3 = new PDF("Les bases de Java", false,    30);
 
-        Etudiant e1 = new Etudiant("SQDSQ", "SDQSDSQ", "sdfsqd", new Date(), "dqdsqds@gmail.com");
+        Etudiant e1 = null;
+        try {
+            e1 = new Etudiant("SQDSQ", "SDQSDSQ", "sdfsqd", new Date(), "dqdsqdsgmail.com");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 
         List<Etudiant> etudiants = new ArrayList<>();
         etudiants.add(e1);
