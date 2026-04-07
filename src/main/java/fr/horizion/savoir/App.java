@@ -1,7 +1,7 @@
 package fr.horizion.savoir;
 
 import fr.horizion.savoir.core.modules.formation.ContentFactory;
-import fr.horizion.savoir.core.modules.payement.PaymentFactory;
+import fr.horizion.savoir.core.modules.payement.SubPayement.PaymentFactory;
 import fr.horizion.savoir.core.modules.payement.PayementStrategy;
 import fr.horizion.savoir.core.modules.promotion.PromotionDecorator;
 import fr.horizion.savoir.models.Etudiant;
@@ -33,13 +33,16 @@ public class App {
 
         PaymentFactory paymentFactory = new PaymentFactory();
 
+// --- STRIPE ---
         PayementStrategy stripeStrategy = paymentFactory.createPaymentStrategy("stripe");
         PaymentProcessor stripeProcessor = new PaymentProcessor(stripeStrategy);
-        stripeProcessor.process(199.99f);
+// 199.99€ devient 19999L (centimes)
+        stripeProcessor.process(19999L, "EUR", "CMD-2024-001");
 
+// --- PAYPAL ---
         PayementStrategy paypalStrategy = paymentFactory.createPaymentStrategy("paypal");
         PaymentProcessor paypalProcessor = new PaymentProcessor(paypalStrategy);
-        paypalProcessor.process(199.99f);
+        paypalProcessor.process(19999L, "EUR", "CMD-2024-002");
 
         System.out.println();
 

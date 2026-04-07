@@ -99,4 +99,6 @@ public class Etudiant implements Observer {
         System.out.println("L'étudiant " + nom + " a reçu : " + message);
 
     }
+
+
 }
