@@ -13,7 +13,7 @@ public class PromotionDecorator extends FormationDecorator {
 
     @Override
     public float getPrice() {
-        return wrappedFormation.getPrix() - (wrappedFormation.getPrix() * remise / 100);
+        return wrappedFormation.getPrice() - (wrappedFormation.getPrice() * remise / 100);
     }
 
     @Override
