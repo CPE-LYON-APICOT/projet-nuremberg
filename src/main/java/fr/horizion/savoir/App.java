@@ -1,11 +1,9 @@
 package fr.horizion.savoir;
 
-import fr.horizion.savoir.core.modules.formation.ContentFactory;
-import fr.horizion.savoir.core.modules.payement.SubPayement.PaymentFactory;
-import fr.horizion.savoir.core.modules.payement.PayementStrategy;
+import fr.horizion.savoir.core.modules.payement.AchatManager;
 import fr.horizion.savoir.core.modules.promotion.PromotionDecorator;
+import fr.horizion.savoir.core.modules.payement.SubPayement.PaymentResult;
 import fr.horizion.savoir.models.Etudiant;
-import fr.horizion.savoir.models.PaymentProcessor;
 import fr.horizion.savoir.models.Syllabus;
 import fr.horizion.savoir.models.formation.Formartion;
 import fr.horizion.savoir.core.modules.formation.SyllabusBuilder;
@@ -27,28 +25,21 @@ public class App {
         Etudiant etudiant1 = new Etudiant("Dupont", "Jean", "123 rue Paris", new Date(), "jean@email.com");
         Etudiant etudiant2 = new Etudiant("Martin", "Marie", "456 rue Lyon", new Date(), "marie@email.com");
 
-        formation.attach(etudiant1);
-        formation.attach(etudiant2);
-        formation.notify("Caca boudin!\n");
+        formation.inscrireEleve(etudiant1);
+        formation.inscrireEleve(etudiant2);
 
-        PaymentFactory paymentFactory = new PaymentFactory();
-
-// --- STRIPE ---
-        PayementStrategy stripeStrategy = paymentFactory.createPaymentStrategy("stripe");
-        PaymentProcessor stripeProcessor = new PaymentProcessor(stripeStrategy);
-// 199.99€ devient 19999L (centimes)
-        stripeProcessor.process(19999L, "EUR", "CMD-2024-001");
-
-// --- PAYPAL ---
-        PayementStrategy paypalStrategy = paymentFactory.createPaymentStrategy("paypal");
-        PaymentProcessor paypalProcessor = new PaymentProcessor(paypalStrategy);
-        paypalProcessor.process(19999L, "EUR", "CMD-2024-002");
+        AchatManager achatManager = new AchatManager();
+        PaymentResult achatResult = achatManager.acheter(formation, etudiant1, "paypal", 19999L, "EUR", "CMD-2024-001");
+        System.out.println("Achat terminé: " + achatResult);
 
         System.out.println();
 
         PromotionDecorator promotionFormation = new PromotionDecorator(formation, 20);
         System.out.println("Prix original: " + formation.getPrix() + "€");
         System.out.println("Prix avec réduction 20%: " + promotionFormation.getPrice() + "€\n");
+
+        formation.marquerContenuTermine("Quiz 1");
+        System.out.println("Progression actuelle: " + formation.getTauxProgression() + "%\n");
 
         Syllabus syllabus = new Syllabus(1, new ArrayList<>(), new ArrayList<>());
         SyllabusBuilder builder = new SyllabusBuilder(syllabus);
