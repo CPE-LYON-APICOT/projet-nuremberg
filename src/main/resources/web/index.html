@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Horizon Savoir</title>
+  <meta name="description" content="Plateforme web Horizon Savoir, connectée à l'API du projet Java.">
+  <link rel="stylesheet" href="/web/styles.css">
+  <script defer src="/web/app.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <header class="hero">
+      <nav class="topbar">
+        <div>
+          <p class="eyebrow">Horizon Savoir</p>
+          <h1>Le campus web du projet Java.</h1>
+        </div>
+        <a class="pill" href="#dashboard">Ouvrir le tableau de bord</a>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="lead">Formation, progression, paiement et notifications dans une interface unique qui parle à votre API.</p>
+          <div class="hero-actions">
+            <button class="button primary" id="refresh-btn">Rafraîchir les données</button>
+            <a class="button ghost" href="#api-console">Tester l'API</a>
+          </div>
+        </div>
+
+        <aside class="status-card">
+          <span class="status-dot" id="api-status-dot"></span>
+          <div>
+            <p class="status-label">API</p>
+            <strong id="api-status">Connexion en attente</strong>
+          </div>
+          <p class="status-hint" id="api-hint">Le tableau de bord se remplit dès que le serveur répond.</p>
+        </aside>
+      </section>
+    </header>
+
+    <main class="content" id="dashboard">
+      <section class="stats" id="stats"></section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Formation active</p>
+            <h2>Vue d'ensemble</h2>
+          </div>
+          <span class="badge" id="formation-badge">Chargement…</span>
+        </div>
+        <div id="formation-list" class="formation-list"></div>
+      </section>
+
+      <section class="grid-two">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Créer</p>
+              <h2>Nouvelle formation</h2>
+            </div>
+          </div>
+          <form id="formation-form" class="form-grid">
+            <label>
+              <span>Titre</span>
+              <input name="titre" type="text" placeholder="Formation Frontend" required>
+            </label>
+            <label>
+              <span>Description</span>
+              <textarea name="description" rows="4" placeholder="Parcours web moderne et interactif" required></textarea>
+            </label>
+            <label>
+              <span>Prix</span>
+              <input name="prix" type="number" min="0" step="0.01" value="149.99" required>
+            </label>
+            <button class="button primary" type="submit">Créer la formation</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Achat</p>
+              <h2>Inscription payée</h2>
+            </div>
+          </div>
+          <form id="purchase-form" class="form-grid">
+            <label>
+              <span>ID formation</span>
+              <input name="formationId" type="number" min="1" value="1" required>
+            </label>
+            <label>
+              <span>Nom</span>
+              <input name="nom" type="text" value="Lefevre" required>
+            </label>
+            <label>
+              <span>Prénom</span>
+              <input name="prenom" type="text" value="Nina" required>
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" value="nina@email.com" required>
+            </label>
+            <label>
+              <span>Adresse</span>
+              <input name="adresse" type="text" value="12 rue du Web" required>
+            </label>
+            <label>
+              <span>Date de naissance</span>
+              <input name="dateNaissance" type="date" value="2001-03-14" required>
+            </label>
+            <div class="split-fields">
+              <label>
+                <span>Paiement</span>
+                <select name="paymentType">
+                  <option value="paypal">PayPal</option>
+                  <option value="stripe">Stripe</option>
+                </select>
+              </label>
+              <label>
+                <span>Montant</span>
+                <input name="amount" type="number" min="0" step="1" value="19999" required>
+              </label>
+            </div>
+            <button class="button primary" type="submit">Acheter et inscrire</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Contenu</p>
+              <h2>Gestion du parcours</h2>
+            </div>
+          </div>
+
+          <form id="content-form" class="form-grid">
+            <label>
+              <span>ID formation</span>
+              <input name="formationId" type="number" min="1" value="1" required>
+            </label>
+            <label>
+              <span>Type</span>
+              <select name="type">
+                <option value="video">Vidéo</option>
+                <option value="quiz">Quiz</option>
+                <option value="pdf">PDF</option>
+              </select>
+            </label>
+            <label>
+              <span>Titre</span>
+              <input name="titre" type="text" value="Nouveau module" required>
+            </label>
+            <label>
+              <span>Valeur spécifique</span>
+              <input name="value" type="number" min="1" value="30" required>
+            </label>
+            <button class="button primary" type="submit">Ajouter le contenu</button>
+          </form>
+
+          <div class="divider"></div>
+
+          <form id="complete-form" class="form-grid">
+            <label>
+              <span>ID formation</span>
+              <input name="formationId" type="number" min="1" value="1" required>
+            </label>
+            <label>
+              <span>Titre du contenu</span>
+              <input name="titre" type="text" value="Quiz 1" required>
+            </label>
+            <button class="button ghost" type="submit">Marquer comme terminé</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="panel panel-wide" id="api-console">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Console</p>
+            <h2>Réponse API</h2>
+          </div>
+          <button class="button ghost" id="load-health-btn">Ping API</button>
+        </div>
+        <pre id="api-output">Aucune requête pour le moment.</pre>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
