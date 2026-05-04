@@ -3,6 +3,7 @@ package fr.horizion.savoir.models;
 import fr.horizion.savoir.shared.observer.Observer;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Etudiant implements Observer {
@@ -98,6 +99,22 @@ public class Etudiant implements Observer {
 
         System.out.println("L'étudiant " + nom + " a reçu : " + message);
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Etudiant etudiant)) {
+            return false;
+        }
+        return Objects.equals(email, etudiant.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 
 
