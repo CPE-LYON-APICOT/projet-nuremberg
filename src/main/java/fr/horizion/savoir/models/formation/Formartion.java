@@ -7,6 +7,7 @@ import fr.horizion.savoir.shared.observer.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Formartion implements Subject {
 
@@ -24,8 +25,8 @@ public class Formartion implements Subject {
         this.titre = titre;
         this.description = description;
         this.prix = prix;
-        this.lesEleves = lesEleves;
-        this.contenuePedagogiques = contenuePedagogiques;
+        this.lesEleves = lesEleves != null ? lesEleves : new ArrayList<>();
+        this.contenuePedagogiques = contenuePedagogiques != null ? contenuePedagogiques : new ArrayList<>();
     }
 
     public int getId() {
@@ -52,6 +53,10 @@ public class Formartion implements Subject {
         return prix;
     }
 
+    public float getPrice() {
+        return getPrix();
+    }
+
     public void setPrix(float prix) {
         this.prix = prix;
     }
@@ -60,11 +65,55 @@ public class Formartion implements Subject {
         return lesEleves;
     }
 
+    public boolean inscrireEleve(Etudiant etudiant) {
+        if (etudiant == null || lesEleves.contains(etudiant)) {
+            return false;
+        }
+
+        lesEleves.add(etudiant);
+        attach(etudiant);
+        notify("Bienvenue dans la formation : " + titre);
+        return true;
+    }
+
+    public boolean retirerEleve(Etudiant etudiant) {
+        if (etudiant == null) {
+            return false;
+        }
+
+        detach(etudiant);
+        return lesEleves.remove(etudiant);
+    }
+
     public void ajouterContenu(String type, String titre, Boolean estTermine, int v) {
         ContenuePedagogique c = contentFactory.createContent(type, titre, estTermine, v);
         if (c != null) {
             contenuePedagogiques.add(c);
+            notify("Nouveau contenu ajouté : " + c.getTitre());
         }
+    }
+
+    public boolean marquerContenuTermine(String titreContenu) {
+        for (ContenuePedagogique contenu : contenuePedagogiques) {
+            if (Objects.equals(contenu.getTitre(), titreContenu)) {
+                contenu.marquerTermine();
+                notify("Le contenu est maintenant disponible : " + titreContenu);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public double getTauxProgression() {
+        if (contenuePedagogiques.isEmpty()) {
+            return 0.0;
+        }
+
+        long contenusTermines = contenuePedagogiques.stream()
+                .filter(ContenuePedagogique::isTermine)
+                .count();
+
+        return (contenusTermines * 100.0) / contenuePedagogiques.size();
     }
 
     public List<ContenuePedagogique> getContenuePedagogiques() {
