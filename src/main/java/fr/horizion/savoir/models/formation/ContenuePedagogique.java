@@ -19,9 +19,25 @@ public abstract class ContenuePedagogique {
         return estTermine;
     }
 
+    public boolean isTermine() {
+        return Boolean.TRUE.equals(estTermine);
+    }
+
+    public void marquerTermine() {
+        this.estTermine = true;
+    }
+
 
     public boolean affiche() {
         System.out.println(titre);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ContenuePedagogique{" +
+                "titre='" + titre + '\'' +
+                ", estTermine=" + estTermine +
+                '}';
     }
 }
