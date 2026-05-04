@@ -11,4 +11,12 @@ public class PaymentResult {
 
     public boolean isSuccess() { return success; }
     public String getTransactionId() { return transactionId; }
+
+    @Override
+    public String toString() {
+        return "PaymentResult{" +
+                "success=" + success +
+                ", transactionId='" + transactionId + '\'' +
+                '}';
+    }
 }
