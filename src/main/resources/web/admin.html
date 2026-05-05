@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr" data-page="admin">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Horizon Savoir - Admin</title>
+  <meta name="description" content="Espace administrateur de Horizon Savoir.">
+  <link rel="stylesheet" href="/web/styles.css">
+  <script defer src="/web/app.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <header class="hero">
+      <nav class="topbar">
+        <div>
+          <p class="eyebrow">Panel admin</p>
+          <h1>Gestion du catalogue et des parcours.</h1>
+        </div>
+        <div class="nav-links auth-nav">
+          <div class="auth-chip" id="auth-summary">Chargement…</div>
+          <a class="pill pill-ghost" href="/">Accueil</a>
+          <a class="pill" href="/web/user.html">Voir côté user</a>
+          <button class="pill pill-ghost" id="logout-btn" type="button">Se déconnecter</button>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="lead">Cette vue permet de gérer les formations, leurs contenus pédagogiques et la progression enregistrée côté API. Les utilisateurs n’y voient pas ces outils.</p>
+          <div class="hero-actions">
+            <button class="button primary" id="refresh-btn">Rafraîchir le catalogue</button>
+            <button class="button ghost" id="load-health-btn">Ping API</button>
+          </div>
+        </div>
+
+        <aside class="status-card">
+          <span class="status-dot" id="api-status-dot"></span>
+          <div>
+            <p class="status-label">API</p>
+            <strong id="api-status">Connexion en attente</strong>
+          </div>
+          <p class="status-hint" id="api-hint">Les formulaires se branchent sur le backend HTTP du projet.</p>
+        </aside>
+      </section>
+    </header>
+
+    <main class="content stack">
+      <section class="stats" id="stats"></section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Vue admin</p>
+            <h2>Catalogue complet</h2>
+          </div>
+          <span class="badge" id="formation-badge">Chargement…</span>
+        </div>
+        <div id="formation-list" class="catalog-grid"></div>
+      </section>
+
+      <section class="profile-layout">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Créer</p>
+              <h2>Nouvelle formation</h2>
+            </div>
+          </div>
+          <form id="formation-form" class="form-grid">
+            <label>
+              <span>Titre</span>
+              <input name="titre" type="text" placeholder="Formation Frontend" required>
+            </label>
+            <label>
+              <span>Description</span>
+              <textarea name="description" rows="4" placeholder="Parcours web moderne et interactif" required></textarea>
+            </label>
+            <label>
+              <span>Prix</span>
+              <input name="prix" type="number" min="0" step="0.01" value="149.99" required>
+            </label>
+            <button class="button primary" type="submit">Créer la formation</button>
+          </form>
+        </article>
+
+        <div class="stack">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="section-kicker">Contenu</p>
+                <h2>Ajouter un module</h2>
+              </div>
+            </div>
+            <form id="content-form" class="form-grid">
+              <label>
+                <span>ID formation</span>
+                <input name="formationId" type="number" min="1" value="1" required>
+              </label>
+              <label>
+                <span>Type</span>
+                <select name="type">
+                  <option value="video">Vidéo</option>
+                  <option value="quiz">Quiz</option>
+                  <option value="pdf">PDF</option>
+                </select>
+              </label>
+              <label>
+                <span>Titre</span>
+                <input name="titre" type="text" value="Nouveau module" required>
+              </label>
+              <label>
+                <span>Valeur spécifique</span>
+                <input name="value" type="number" min="1" value="30" required>
+              </label>
+              <button class="button primary" type="submit">Ajouter le contenu</button>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="section-kicker">Progression</p>
+                <h2>Marquer un contenu terminé</h2>
+              </div>
+            </div>
+            <form id="complete-form" class="form-grid">
+              <label>
+                <span>ID formation</span>
+                <input name="formationId" type="number" min="1" value="1" required>
+              </label>
+              <label>
+                <span>Titre du contenu</span>
+                <input name="titre" type="text" value="Quiz 1" required>
+              </label>
+              <button class="button ghost" type="submit">Mettre à jour la progression</button>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel panel-wide" id="api-console">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Console</p>
+            <h2>Réponse API</h2>
+          </div>
+        </div>
+        <pre id="api-output">Aucune requête pour le moment.</pre>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

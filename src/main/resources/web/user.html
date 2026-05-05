@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr" data-page="user">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Horizon Savoir - User</title>
+  <meta name="description" content="Espace utilisateur de Horizon Savoir.">
+  <link rel="stylesheet" href="/web/styles.css">
+  <script defer src="/web/app.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <header class="hero">
+      <nav class="topbar">
+        <div>
+          <p class="eyebrow">Espace user</p>
+          <h1>Le catalogue et mes formations suivies.</h1>
+        </div>
+        <div class="nav-links auth-nav">
+          <div class="auth-chip" id="auth-summary">Chargement…</div>
+          <a class="pill pill-ghost" href="/">Accueil</a>
+          <a class="pill" href="/web/admin.html">Voir le panel admin</a>
+          <button class="pill pill-ghost" id="logout-btn" type="button">Se déconnecter</button>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="lead">Cette vue affiche uniquement le catalogue et les formations qui correspondent à votre profil. L’identification se fait par email pour rester compatible avec l’API actuelle.</p>
+          <div class="hero-actions">
+            <button class="button primary" id="refresh-btn">Rafraîchir mes vues</button>
+            <button class="button ghost" id="load-health-btn">Ping API</button>
+          </div>
+        </div>
+
+        <aside class="status-card">
+          <span class="status-dot" id="api-status-dot"></span>
+          <div>
+            <p class="status-label">API</p>
+            <strong id="api-status">Connexion en attente</strong>
+          </div>
+          <p class="status-hint" id="api-hint">Renseignez votre profil pour faire remonter vos formations suivies.</p>
+        </aside>
+      </section>
+    </header>
+
+    <main class="content stack">
+      <section class="profile-layout">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Profil</p>
+              <h2>Définir l’identité utilisateur</h2>
+            </div>
+          </div>
+          <p class="profile-summary" id="profile-summary">Renseignez un email pour afficher vos formations suivies.</p>
+          <form id="profile-form" class="form-grid">
+            <div class="split-fields">
+              <label>
+                <span>Nom</span>
+                <input id="profile-nom" name="nom" type="text" placeholder="Dupont">
+              </label>
+              <label>
+                <span>Prénom</span>
+                <input id="profile-prenom" name="prenom" type="text" placeholder="Camille">
+              </label>
+            </div>
+            <label>
+              <span>Email</span>
+              <input id="profile-email" name="email" type="email" placeholder="camille@email.com">
+            </label>
+            <label>
+              <span>Adresse</span>
+              <input id="profile-adresse" name="adresse" type="text" placeholder="12 rue du Web">
+            </label>
+            <label>
+              <span>Date de naissance</span>
+              <input id="profile-date-naissance" name="dateNaissance" type="date">
+            </label>
+            <button class="button primary" type="submit">Enregistrer mon profil</button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Sélection</p>
+              <h2 id="selected-formation-title">Aucune formation sélectionnée</h2>
+            </div>
+            <span class="badge" id="selected-formation-badge">Vide</span>
+          </div>
+          <p class="selection-copy" id="selected-formation-body">Choisissez une formation dans le catalogue pour afficher ses détails.</p>
+          <div class="divider"></div>
+          <form id="purchase-form" class="form-grid">
+            <label>
+              <span>ID formation</span>
+              <input name="formationId" type="number" min="1" value="1" required>
+            </label>
+            <div class="split-fields">
+              <label>
+                <span>Paiement</span>
+                <select name="paymentType">
+                  <option value="paypal">PayPal</option>
+                  <option value="stripe">Stripe</option>
+                </select>
+              </label>
+              <label>
+                <span>Montant</span>
+                <input name="amount" type="number" min="0" step="1" value="19999" required>
+              </label>
+            </div>
+            <label>
+              <span>Nom</span>
+              <input name="nom" type="text" placeholder="Dupont">
+            </label>
+            <label>
+              <span>Prénom</span>
+              <input name="prenom" type="text" placeholder="Camille">
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" placeholder="camille@email.com">
+            </label>
+            <label>
+              <span>Adresse</span>
+              <input name="adresse" type="text" placeholder="12 rue du Web">
+            </label>
+            <label>
+              <span>Date de naissance</span>
+              <input name="dateNaissance" type="date">
+            </label>
+            <button class="button ghost" type="submit">S’inscrire à la formation</button>
+          </form>
+        </article>
+      </section>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Catalogue</p>
+            <h2>Formations disponibles</h2>
+          </div>
+          <span class="badge" id="formation-badge">Chargement…</span>
+        </div>
+        <div id="catalog-list" class="catalog-grid"></div>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Mes cours</p>
+            <h2>Formations suivies</h2>
+          </div>
+        </div>
+        <div id="my-formations" class="catalog-grid"></div>
+      </section>
+
+      <section class="panel panel-wide" id="api-console">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Console</p>
+            <h2>Réponse API</h2>
+          </div>
+        </div>
+        <pre id="api-output">Aucune requête pour le moment.</pre>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
