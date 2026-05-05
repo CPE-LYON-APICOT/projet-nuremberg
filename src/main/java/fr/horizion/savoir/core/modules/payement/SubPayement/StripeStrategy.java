@@ -10,14 +10,27 @@ import java.util.logging.Logger;
 public class StripeStrategy implements PayementStrategy {
     private static final Logger LOGGER = Logger.getLogger(StripeStrategy.class.getName());
     private final StripeClient stripeClient;
+    private final boolean configured;
 
     public StripeStrategy() {
         String apiKey = System.getenv("STRIPE_SECRET_KEY");
-        this.stripeClient = new StripeClient(apiKey);
+        if (apiKey == null || apiKey.isBlank()) {
+            LOGGER.severe("STRIPE_SECRET_KEY non définie — les paiements Stripe échoueront");
+            this.stripeClient = null;
+            this.configured = false;
+        } else {
+            this.stripeClient = new StripeClient(apiKey);
+            this.configured = true;
+        }
     }
 
     @Override
     public boolean pay(long amount, String currency, String orderId) {
+        if (!configured || stripeClient == null) {
+            LOGGER.severe("Stripe non configuré, paiement refusé pour " + orderId);
+            return false;
+        }
+
         try {
             PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                     .setAmount(amount)
@@ -38,6 +51,9 @@ public class StripeStrategy implements PayementStrategy {
 
         } catch (StripeException e) {
             LOGGER.severe("Erreur Stripe lors du paiement de la commande " + orderId + " : " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            LOGGER.severe("Erreur inattendue lors du paiement Stripe de la commande " + orderId + " : " + e.getMessage());
             return false;
         }
     }

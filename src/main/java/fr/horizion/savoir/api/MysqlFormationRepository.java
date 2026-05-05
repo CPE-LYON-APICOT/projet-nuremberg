@@ -168,6 +168,9 @@ public class MysqlFormationRepository implements FormationRepository {
             } catch (SQLException exception) {
                 connection.rollback();
                 throw exception;
+            } catch (Exception exception) {
+                connection.rollback();
+                throw new SQLException("Erreur lors de l'achat : " + exception.getMessage(), exception);
             } finally {
                 connection.setAutoCommit(true);
             }
