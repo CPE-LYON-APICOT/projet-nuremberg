@@ -34,7 +34,7 @@ class AppTest {
 //    }
 
 
-//    @Test
+    @Test
     void testApp() {
         // CreatePDF
         Formartion formartion = new Formartion(1, "Formation Java", "Une formation complète sur Java", 199.99f, null, null);
